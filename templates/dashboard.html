@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Study Planner Dashboard</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f6fa;
+            color: #333;
+            padding: 20px;
+        }
+        h2 {
+            color: #2d3436;
+            margin-bottom: 20px;
+        }
+        .container {
+            max-width: 800px;
+            margin: auto;
+            background: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+        }
+        .message {
+            font-size: 1.1em;
+            color: #d63031;
+            margin-bottom: 15px;
+        }
+        .welcome, .links, .study-plans {
+            margin-bottom: 20px;
+        }
+        .button {
+            background-color: #0984e3;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.9em;
+            text-decoration: none;
+            display: inline-block;
+            margin-right: 10px;
+        }
+        .button:hover {
+            background-color: #74b9ff;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+        table, th, td {
+            border: 1px solid #dcdde1;
+        }
+        th, td {
+            padding: 10px;
+            text-align: center;
+        }
+        th {
+            background-color: #74b9ff;
+            color: white;
+        }
+        tr:nth-child(even) {
+            background-color: #f1f2f6;
+        }
+        .no-plans {
+            color: #636e72;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        {% if error %}
+            <p class="message">{{ error }} <a href="/login">Login Here</a></p>
+        {% else %}
+            <div class="welcome">
+                <p>Welcome, <strong>{{ name }}</strong>!</p>
+            </div>
+            <div class="links">
+                <a href="/logout" class="button">Logout</a>
+                <a href="/studyplan/{{ id }}" class="button">Create New Study Plan</a>
+            </div>
+            <div class="message">{{ msg }}</div>
+            
+            {% if study_plans %}
+                <div class="study-plans">
+                    <h2>Your Study Plans</h2>
+                    <table>
+                        <tr>
+                            <th>Title</th>
+                            <th>Description</th>
+                            <th>Date</th>
+                            <th>Status</th>
+                            <th>Action</th>
+                        </tr>
+                        {% for plan in study_plans %}
+                            <tr>
+                                <td>{{ plan[0] }}</td>
+                                <td>{{ plan[1] }}</td>
+                                <td>{{ plan[2] }}</td>
+                                <td>{{ plan[3] }}</td>
+                                <td>
+                                    {% if plan[3] == "pending" %}
+                                        <form action="/update_status/{{ plan[0] }}" method="post" style="display:inline;">
+                                            <input type="submit" value="Mark as Done" class="button">
+                                        </form>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </table>
+                </div>
+            {% else %}
+                <p class="no-plans">You have no study plans yet.</p>
+            {% endif %}
+        {% endif %}
+    </div>
+</body>
+</html>

@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Study Plan</title>
+    <style>
+        /* Reset and global styles */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f6fa;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            color: #333;
+        }
+        .container {
+            max-width: 500px;
+            width: 100%;
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h2 {
+            color: #2d3436;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .message {
+            color: #d63031;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+        label {
+            font-size: 0.9em;
+            margin-bottom: 5px;
+            color: #2d3436;
+        }
+        input[type="text"], input[type="datetime-local"] {
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #dcdde1;
+            border-radius: 5px;
+            font-size: 1em;
+        }
+        input[type="submit"] {
+            background-color: #0984e3;
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1em;
+            font-weight: bold;
+            text-transform: uppercase;
+            margin-top: 10px;
+        }
+        input[type="submit"]:hover {
+            background-color: #74b9ff;
+        }
+        .back-link {
+            display: inline-block;
+            margin-bottom: 15px;
+            font-size: 0.9em;
+            color: #0984e3;
+            text-decoration: none;
+        }
+        .back-link:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="/dashboard" class="back-link">Back to Dashboard</a>
+        <h2>Create New Study Plan</h2>
+        
+        {% if msg %}
+            <p class="message">{{ msg }}</p>
+        {% endif %}
+        
+        <form action="/studyplan/{{ id }}" method="post">
+            <label for="title">Title:</label>
+            <input type="text" id="title" name="title" placeholder="Enter plan title" required>
+
+            <label for="descr">Description:</label>
+            <input type="text" id="descr" name="descr" placeholder="Enter description" required>
+
+            <label for="det">Date:</label>
+            <input type="datetime-local" id="det" name="det" required>
+
+            <input type="submit" value="Submit">
+        </form>
+    </div>
+</body>
+</html>
